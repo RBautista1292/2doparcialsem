@@ -5,6 +5,7 @@ import Menu from './components/menu';
 import CotizadorPrestamo from './components/CotizadorPrestamo';
 import FormularioAltas from './components/FormularioAltas';
 import TablaResultados from './components/TablaResultados';
+import Home from './components/Home';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Router>
       <Menu />
       <Routes>
+      <Route path="/" element={<Home />} />
         <Route path="/cotizar-prestamo" element={<CotizadorPrestamo />} />
         <Route path="/alta-cliente" element={<FormularioAltas />} />
         <Route path="/tabla" element={<TablaResultados />} />
