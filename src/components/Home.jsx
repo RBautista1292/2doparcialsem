@@ -1,7 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-export default function Home() {
+function Home() {
   return (
-    <div>Home</div>
-  )
+    <div className="container mt-5">
+      <h2>Bienvenido a la aplicación de Cotización de Préstamos</h2>
+    </div>
+  );
 }
+
+export default Home;
