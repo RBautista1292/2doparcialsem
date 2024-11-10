@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../components/CSS/RegisterCSS.css';
+import './CSS/RegisterCSS.css';
 
 function Register() {
-  const [client, setClient] = useState({
-    fullName: '',
-    rfc: '',
-    age: '',
-    registrationDate: '',
-    phone: '',
-    email: '',
-    username: '',
-    password: '',
-  });
-
   const navigate = useNavigate();
+  const [client, setClient] = useState({
+    apellido_paterno: '',
+    apellido_materno: '',
+    nombres: '',
+    usuario: '',
+    contrasena: '',
+    rfc: '',
+    edad: '',
+    telefono: '',
+    correo: '',
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,13 +25,16 @@ function Register() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Datos de registro:", client);
-
-    // Muestra una alerta de confirmación y redirige
-    alert("Usuario registrado exitosamente");
-    navigate('/login');
+    try {
+      await axios.post('http://25.57.211.155:5000/registrarUsuario', client);
+      alert("Usuario registrado con éxito");
+      navigate('/login'); // Redirige al login después del registro
+    } catch (error) {
+      alert("Hubo un error al registrar el usuario. Intente nuevamente.");
+      console.error(error);
+    }
   };
 
   return (
@@ -38,40 +42,52 @@ function Register() {
       <div className="register-box">
         <h3 className="register-title">Registro de Cliente</h3>
         <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="fullName" className="form-label">Nombre Completo</label>
-            <input type="text" className="form-control form-control-sm" id="fullName" name="fullName" value={client.fullName} onChange={handleChange} required />
+          <div className="form-row">
+            <div className="form-group">
+              <label>Apellido Paterno</label>
+              <input type="text" name="apellido_paterno" value={client.apellido_paterno} onChange={handleChange} required />
+            </div>
+            <div className="form-group">
+              <label>Apellido Materno</label>
+              <input type="text" name="apellido_materno" value={client.apellido_materno} onChange={handleChange} required />
+            </div>
           </div>
-          <div className="mb-3">
-            <label htmlFor="rfc" className="form-label">RFC</label>
-            <input type="text" className="form-control form-control-sm" id="rfc" name="rfc" value={client.rfc} onChange={handleChange} required />
+          <div className="form-row">
+            <div className="form-group">
+              <label>Nombres</label>
+              <input type="text" name="nombres" value={client.nombres} onChange={handleChange} required />
+            </div>
+            <div className="form-group">
+              <label>Nombre de Usuario</label>
+              <input type="text" name="usuario" value={client.usuario} onChange={handleChange} required />
+            </div>
           </div>
-          <div className="mb-3">
-            <label htmlFor="age" className="form-label">Edad</label>
-            <input type="number" className="form-control form-control-sm" id="age" name="age" value={client.age} onChange={handleChange} required />
+          <div className="form-row">
+            <div className="form-group">
+              <label>Contraseña</label>
+              <input type="password" name="contrasena" value={client.contrasena} onChange={handleChange} required />
+            </div>
+            <div className="form-group">
+              <label>RFC</label>
+              <input type="text" name="rfc" value={client.rfc} onChange={handleChange} required />
+            </div>
           </div>
-          <div className="mb-3">
-            <label htmlFor="registrationDate" className="form-label">Fecha de Alta</label>
-            <input type="date" className="form-control form-control-sm" id="registrationDate" name="registrationDate" value={client.registrationDate} onChange={handleChange} required />
+          <div className="form-row">
+            <div className="form-group">
+              <label>Edad</label>
+              <input type="number" name="edad" value={client.edad} onChange={handleChange} required />
+            </div>
+            <div className="form-group">
+              <label>Teléfono</label>
+              <input type="tel" name="telefono" value={client.telefono} onChange={handleChange} required />
+            </div>
           </div>
-          <div className="mb-3">
-            <label htmlFor="phone" className="form-label">Teléfono</label>
-            <input type="tel" className="form-control form-control-sm" id="phone" name="phone" value={client.phone} onChange={handleChange} required />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">Correo Electrónico</label>
-            <input type="email" className="form-control form-control-sm" id="email" name="email" value={client.email} onChange={handleChange} required />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="username" className="form-label">Nombre de Usuario</label>
-            <input type="text" className="form-control form-control-sm" id="username" name="username" value={client.username} onChange={handleChange} required />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">Contraseña</label>
-            <input type="password" className="form-control form-control-sm" id="password" name="password" value={client.password} onChange={handleChange} required />
+          <div className="form-group">
+            <label>Correo Electrónico</label>
+            <input type="email" name="correo" value={client.correo} onChange={handleChange} required />
           </div>
           <button type="submit" className="register-button">Registrarse</button>
-        </form>
+        </form> 
       </div>
     </div>
   );

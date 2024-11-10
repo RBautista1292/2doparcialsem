@@ -18,6 +18,12 @@ function Menu({ loggedInUser, onLogout }) {
             <li className="nav-item">
               <Link className="nav-link" to="/cotizar-prestamo">Cotizar Préstamo</Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/cotizacion">Cotización</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/ver-cotizaciones">Ver Cotizaciones</Link>
+            </li>
           </ul>
           <div className="d-flex align-items-center">
             {loggedInUser ? (
@@ -36,4 +42,3 @@ function Menu({ loggedInUser, onLogout }) {
 }
 
 export default Menu;
-
