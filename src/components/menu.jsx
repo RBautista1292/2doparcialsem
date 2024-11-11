@@ -23,7 +23,7 @@ function Menu({ loggedInUser, onLogout }) {
               <Link className="nav-link" to="/cotizacion">Cotización</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/ver-cotizaciones">Ver Cotizaciones</Link>
+              <Link className="nav-link" to="/ver-cotizaciones">Ver cotizaciones</Link>
             </li>
           </ul>
           <div className="d-flex align-items-center">
