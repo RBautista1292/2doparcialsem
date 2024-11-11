@@ -1,50 +1,69 @@
+// src/components/Login.jsx
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import '../components/CSS/LoginCSS.css';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import './CSS/LoginCSS.css';
 
 function Login({ onLogin }) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+  const [usuario, setUsuario] = useState('');
+  const [contrasena, setContrasena] = useState('');
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    onLogin(username);
-    // Redirige a la página de cotizar préstamo después de iniciar sesión
-    navigate('/cotizar-prestamo');
+    const data = new FormData();
+    data.append('usuario', usuario);
+    data.append('contrasena', contrasena);
+
+    const config = {
+      method: 'post',
+      url: 'http://25.57.211.155:5000/iniciarSesion/',
+      data: data,
+    };
+
+    try {
+      const response = await axios(config);
+      if (response.data && response.data.data) {
+        onLogin(response.data.data.usuario); // Usa el nombre de usuario que recibes como parámetro
+      } else {
+        setError('Credenciales inválidas');
+      }
+    } catch (err) {
+      setError('Error al iniciar sesión. Verifica tus datos e intenta nuevamente.');
+      console.error('Error en la solicitud de inicio de sesión:', err);
+    }
   };
 
   return (
     <div className="login-container">
       <div className="login-box">
-        <h3 className="login-title">Iniciar Sesión</h3>
-        <form onSubmit={handleSubmit}>
+        <h2 className="login-title">Iniciar Sesión</h2>
+        {error && <div className="alert alert-danger">{error}</div>}
+        <form onSubmit={handleLogin}>
           <div className="mb-3">
-            <label htmlFor="username" className="form-label">Nombre de Usuario</label>
+            <label className="form-label">Usuario</label>
             <input
               type="text"
               className="form-control"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
+              value={usuario}
+              onChange={(e) => setUsuario(e.target.value)}
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="password" className="form-label">Contraseña</label>
+            <label className="form-label">Contraseña</label>
             <input
               type="password"
               className="form-control"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
+              value={contrasena}
+              onChange={(e) => setContrasena(e.target.value)}
             />
           </div>
-          <button type="submit" className="login-button">Entrar</button>
+          <button type="submit" className="login-button">
+            Iniciar Sesión
+          </button>
         </form>
         <Link to="/register" className="register-link">
-          ¿No tienes cuenta? Regístrate aquí
+          ¿No tienes una cuenta? Regístrate aquí
         </Link>
       </div>
     </div>
