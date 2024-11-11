@@ -40,7 +40,7 @@ function CotizacionForm() {
 
   const guardarCotizacion = () => {
     if (cotizacion && cotizacion.id_prestamista) {  // Asegúrate de que el ID correcto esté presente
-      axios.post(`http://25.57.211.155:5000/guardarCotizacion/${cotizacion.id_prestamista}`, cotizacion)
+      axios.post(`http://25.57.211.155:5000/guardarCotizacion/${cotizacion.id_prestamista}/`, cotizacion)
         .then((response) => {
           alert(response.data.response); // Mostrar mensaje de éxito
         })
