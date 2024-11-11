@@ -16,9 +16,6 @@ function Menu({ loggedInUser, onLogout }) {
               <Link className="nav-link" to="/">Inicio</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/cotizar-prestamo">Cotizar Préstamo</Link>
-            </li>
-            <li className="nav-item">
               <Link className="nav-link" to="/cotizacion">Cotización</Link>
             </li>
             <li className="nav-item">

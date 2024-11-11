@@ -1,6 +1,5 @@
-// src/components/Login.jsx
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './CSS/LoginCSS.css';
 
@@ -8,23 +7,30 @@ function Login({ onLogin }) {
   const [usuario, setUsuario] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const data = new FormData();
-    data.append('usuario', usuario);
-    data.append('contrasena', contrasena);
+
+    const data = {
+      usuario: usuario,
+      contrasena: contrasena
+    };
 
     const config = {
       method: 'post',
       url: 'http://25.57.211.155:5000/iniciarSesion/',
-      data: data,
+      headers: { 
+        'Content-Type': 'application/json'
+      },
+      data: JSON.stringify(data)
     };
 
     try {
       const response = await axios(config);
       if (response.data && response.data.data) {
-        onLogin(response.data.data.usuario); // Usa el nombre de usuario que recibes como parámetro
+        onLogin(response.data.data.usuario);
+        navigate('/ver-cotizaciones'); // Redirige a la página de cotizaciones
       } else {
         setError('Credenciales inválidas');
       }
