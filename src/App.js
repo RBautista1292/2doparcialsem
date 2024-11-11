@@ -11,18 +11,15 @@ import VerCotizaciones from './components/VerCotizaciones';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
-  const [userId, setUserId] = useState(null); // Estado para almacenar el ID de usuario
 
-  const handleLogin = (userData) => {
+  const handleLogin = (username) => {
     setIsLoggedIn(true);
-    setLoggedInUser(userData.usuario);
-    setUserId(userData.id_cliente); // Guardar el ID del usuario al iniciar sesión
+    setLoggedInUser(username);
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
     setLoggedInUser(null);
-    setUserId(null); // Limpiar el ID del usuario al cerrar sesión
   };
 
   return (
@@ -34,7 +31,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login onLogin={handleLogin} />} />
           <Route path="/cotizacion" element={isLoggedIn ? <CotizacionForm /> : <Navigate to="/login" />} />
-          <Route path="/ver-cotizaciones" element={isLoggedIn ? <VerCotizaciones userId={userId} /> : <Navigate to="/login" />} />
+          <Route path="/ver-cotizaciones" element={isLoggedIn ? <VerCotizaciones /> : <Navigate to="/login" />} />
         </Routes>
       </div>
     </Router>

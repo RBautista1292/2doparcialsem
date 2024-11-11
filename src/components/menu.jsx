@@ -1,3 +1,4 @@
+// src/components/Menu.js
 import logo from '../logo.svg';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -14,6 +15,9 @@ function Menu({ loggedInUser, onLogout }) {
           <ul className="navbar-nav me-auto">
             <li className="nav-item">
               <Link className="nav-link" to="/">Inicio</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/cotizar-prestamo">Cotizar Préstamo</Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/cotizacion">Cotización</Link>
